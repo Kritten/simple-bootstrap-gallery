@@ -46,19 +46,21 @@ class Listener_Touch
 class Gallery 
 {
     constructor(html_modal, css_gallery) {
-        this.m_duration_transition_images = 300; 
+        this.m_name_class_image = '.sbg-image';
+
+        this.m_duration_transition_images = 200; 
         this.m_duration_transition_controls = 100; 
         this.m_is_transitioning = false; 
-        this.m_index_current = 0;
 
         this.m_a_active = false;
+        this.m_gallery_active = undefined;
 
         this.m_html_modal = html_modal;
         this.m_css_gallery = css_gallery;
         this.m_image = new Image();
 
-        this.m_map_images = new Map();
-        this.m_list_images = [];
+        this.m_map_galleries = new Map();
+        this.m_map_galleries.set('default', this.create_new_gallery());
 
         this.init();
     }
@@ -70,10 +72,17 @@ class Gallery
 
         const that = this;
 
-        $('.gallery').each(function(index, image) {
-            const src = $(image).data('src');
-            that.m_list_images.push(src);
-            that.m_map_images.set(src, index);
+        $(this.m_name_class_image).each(function(index, image) {
+            const jquery_image = $(image);
+            let src = jquery_image.data('src');
+            if(src == undefined)
+            {
+                src = jquery_image.prop('src');
+            }
+
+            const gallery = that.select_gallery(jquery_image);
+            gallery.map_images.set(src, gallery.list_images.length);
+            gallery.list_images.push(src);
         });
 
         this.m_image_a = $('#wrapper_gallery img.a');
@@ -82,7 +91,7 @@ class Gallery
         this.m_image_a.hide();
         this.m_image_b.hide();
 
-        $('.gallery').on('click', function() {
+        $(this.m_name_class_image).on('click', function() {
             that.click_on_thumbnail(this);
         });
 
@@ -135,11 +144,19 @@ class Gallery
         }
     }
 
-    click_on_thumbnail(img)
-    {
-        const src = $(img).data('src');
+    click_on_thumbnail(image)
+    {   
+        const jquery_image = $(image);
+        let src = jquery_image.data('src');
+        if(src == undefined)
+        {
+            src = jquery_image.prop('src');
+        }
 
-        this.m_index_current = this.m_map_images.get(src);
+        const gallery = this.select_gallery(jquery_image);
+
+        this.m_gallery_active = gallery;
+        gallery.index_current = gallery.map_images.get(src);
 
         this.m_image_a.prop('src', '');
         this.m_image_b.prop('src', '');
@@ -160,15 +177,15 @@ class Gallery
 
             if(direction == 'left')
             {
-                this.m_index_current -= 1;
-                if(this.m_index_current <= -1) this.m_index_current = this.m_list_images.length - 1;
+                this.m_gallery_active.index_current -= 1;
+                if(this.m_gallery_active.index_current <= -1) this.m_gallery_active.index_current = this.m_gallery_active.list_images.length - 1;
             } else {
-                this.m_index_current += 1;
-                if(this.m_index_current >= this.m_list_images.length) this.m_index_current = 0;
+                this.m_gallery_active.index_current += 1;
+                if(this.m_gallery_active.index_current >= this.m_gallery_active.list_images.length) this.m_gallery_active.index_current = 0;
             }
 
             $('#gallery_modal_image .fa-spinner').show();
-            this.m_image.src = this.m_list_images[this.m_index_current];
+            this.m_image.src = this.m_gallery_active.list_images[this.m_gallery_active.index_current];
         }
     }
 
@@ -195,6 +212,32 @@ class Gallery
         });
         
         $('#gallery_modal_image .fa-spinner').hide();
+    }
+
+    create_new_gallery()
+    {
+        return {
+            index_current: 0,
+            map_images: new Map(),
+            list_images: []
+        };
+    }
+
+    select_gallery(jquery_image)
+    {
+        const name_gallery = jquery_image.data('gallery');
+        let gallery = this.m_map_galleries.get(name_gallery);
+        if(gallery == undefined)
+        {
+            if(name_gallery == undefined)
+            {
+                gallery = this.m_map_galleries.get('default');
+            } else {
+                gallery = this.create_new_gallery();
+                this.m_map_galleries.set(name_gallery, gallery);
+            }
+        }
+        return gallery;
     }
 }
 
