@@ -162,7 +162,7 @@ class Gallery
         this.m_image_b.prop('src', '');
 
         $('#gallery_modal_image').modal('show');
-        $('#gallery_modal_image .fa-spinner').show();
+        $('#gallery_modal_image .loader').show();
 
         this.m_image.src = src;
     }
@@ -184,7 +184,7 @@ class Gallery
                 if(this.m_gallery_active.index_current >= this.m_gallery_active.list_images.length) this.m_gallery_active.index_current = 0;
             }
 
-            $('#gallery_modal_image .fa-spinner').show();
+            $('#gallery_modal_image .loader').show();
             this.m_image.src = this.m_gallery_active.list_images[this.m_gallery_active.index_current];
         }
     }
@@ -211,7 +211,7 @@ class Gallery
             that.m_a_active = !that.m_a_active;
         });
         
-        $('#gallery_modal_image .fa-spinner').hide();
+        $('#gallery_modal_image .loader').hide();
     }
 
     create_new_gallery()
@@ -255,11 +255,6 @@ const css_gallery = `
             width: calc(100% - 100px);
             height: calc(100vh - 60px);
         }
-    }
-    #wrapper_gallery .fa-spinner {
-        z-index: 5;
-        position: absolute;
-        color: #fff;
     }
     #wrapper_gallery img {
         max-height: calc(100vh - 20px);
@@ -309,10 +304,6 @@ const css_gallery = `
         line-height: 3rem;
         font-size: 6rem;
     }
-    .carousel-control[data-direction="center"] span {
-        font-size: 6rem;
-        line-height: 6rem
-    }
     .carousel-control[data-direction="right"] {
         text-align: right;
         right: 0;
@@ -338,6 +329,23 @@ const css_gallery = `
         transform: rotate(-45deg);
         -webkit-transform: rotate(-45deg);
     }
+
+    .loader {
+        /* position: absolute;
+        color: #fff; */
+        z-index: 5;
+        border: 0.75rem solid rgba(255, 255, 255, 0.5);
+        border-top: 0.75rem solid #fff;
+        border-radius: 50%;
+        width: 6rem;
+        height: 6rem;
+        animation: spin 2s linear infinite;
+        -webkit-animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 `;
 
@@ -355,7 +363,7 @@ const html_modal = `
                 &times;
             </div>
             <div id="wrapper_gallery" class="d-flex flex-row align-items-center justify-content-center">
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                <div class="loader"></div>
                 <img class="a rounded" src="">
                 <img class="b rounded" src="">
             </div>
