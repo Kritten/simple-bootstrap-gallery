@@ -102,9 +102,9 @@ class Gallery
         if(!('ontouchstart' in document.documentElement))
         {
             $('.carousel-control').hover(function() {
-                $(this).find('i').fadeTo(that.m_duration_transition_controls, 1.0);
+                $(this).fadeTo(that.m_duration_transition_controls, 1.0);
             }, function() {
-                $(this).find('i').fadeTo(that.m_duration_transition_controls, 0.5);
+                $(this).fadeTo(that.m_duration_transition_controls, 0.5);
             })
 
             $('.carousel-control').on('click', function() {
@@ -297,21 +297,21 @@ const css_gallery = `
         position: absolute;
         width: 50px; 
         height: calc(100vh - 60px);
-        display: table;
-        font-size: 3rem;
         z-index: 50;
-    }
-    .carousel-control i {
-        color: #fff;
         opacity: 0.5;
-        vertical-align: middle;
-        display: table-cell;
     }
     .carousel-control[data-direction="center"] {
         z-index: 100;
         height: 50px; 
         right: 0;
         text-align: center;
+        color: #fff;
+        line-height: 3rem;
+        font-size: 6rem;
+    }
+    .carousel-control[data-direction="center"] span {
+        font-size: 6rem;
+        line-height: 6rem
     }
     .carousel-control[data-direction="right"] {
         text-align: right;
@@ -323,22 +323,36 @@ const css_gallery = `
         -ms-user-select: none;
         user-select: none;
     }
+    .arrow {
+        border: solid #fff;
+        border-width: 0 0.5rem 0.5rem 0;
+        display: inline-block;
+        padding: 1rem;
+        margin-top: calc(50vh - 30px - 0.75rem);
+    }
+    .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+    .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
 </style>
 `;
 
 const html_modal = `
-<i class="fa fa-spinner fa-pulse fa-3x fa-fw position-fixed" style="opacity: 0"></i>
 <div class="modal fade" id="gallery_modal_image" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div data-direction="left" class="carousel-control">
-                <i class="fa fa-chevron-left"></i>
+                <i class="arrow left"></i>
             </div>
             <div data-direction="right" class="carousel-control">
-                <i class="fa fa-chevron-right"></i>
+                <i class="arrow right"></i>
             </div>
-            <div data-direction="center" class="carousel-control align-self-stretch">
-                <i class="fa fa-times"></i>
+            <div data-direction="center" class="carousel-control tmp_align-self-stretch">
+                &times;
             </div>
             <div id="wrapper_gallery" class="d-flex flex-row align-items-center justify-content-center">
                 <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
