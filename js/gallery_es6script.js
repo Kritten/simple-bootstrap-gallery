@@ -346,6 +346,12 @@ const css_gallery = `
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    @media screen and (-ms-high-contrast: active),
+        (-ms-high-contrast: none) {
+        #wrapper_gallery img {
+            transform: translate(-50%, -50%);
+        }
+    }
 </style>
 `;
 
