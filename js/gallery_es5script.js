@@ -58,6 +58,7 @@ var Gallery = function () {
 
         this.m_name_class_image = '.sbg-image';
 
+        // this.m_duration_transition_images = 0; 
         this.m_duration_transition_images = 200;
         this.m_duration_transition_controls = 100;
         this.m_is_transitioning = false;
@@ -122,9 +123,9 @@ var Gallery = function () {
                 });
 
                 $(window).on('keyup', function (e) {
-                    if (e.which == 37) {
+                    if (e.which == 37 || e.which == 33) {
                         that.click_on_control('left');
-                    } else if (e.which == 39) {
+                    } else if (e.which == 39 || e.which == 34) {
                         that.click_on_control('right');
                     }
                 });
@@ -204,11 +205,11 @@ var Gallery = function () {
 
             image_active.prop('src', image.src);
 
-            image_inactive.fadeOut(this.m_duration_transition_images, function () {});
+            image_inactive.css('opacity', 1).fadeTo(this.m_duration_transition_images, 0, function () {});
 
             var that = this;
 
-            image_active.fadeIn(this.m_duration_transition_images, function () {
+            image_active.css('opacity', 0).fadeTo(this.m_duration_transition_images, 1, function () {
                 that.m_is_transitioning = false;
                 that.m_a_active = !that.m_a_active;
             });
