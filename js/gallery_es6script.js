@@ -341,6 +341,12 @@ const css_gallery = `
         height: 6rem;
         animation: spin 2s linear infinite;
         -webkit-animation: spin 2s linear infinite;
+
+    }
+    .wrapper_loader {
+
+        z-index: 5;
+        position: absolute;
     }
     @keyframes spin {
         0% { transform: rotate(0deg); }
@@ -350,6 +356,12 @@ const css_gallery = `
         (-ms-high-contrast: none) {
         #wrapper_gallery img {
             transform: translate(-50%, -50%);
+        }
+        #gallery_modal_image {
+            min-height: 5000px;
+        }
+        .wrapper_loader {
+            display: none;
         }
     }
 </style>
@@ -369,7 +381,7 @@ const html_modal = `
                 &times;
             </div>
             <div id="wrapper_gallery" class="d-flex flex-row align-items-center justify-content-center">
-                <div class="loader"></div>
+                <div class="wrapper_loader"><div class="loader"></div></div>
                 <img class="a rounded" src="">
                 <img class="b rounded" src="">
             </div>
