@@ -31,7 +31,7 @@ Tested with the following browser versions (other browsers or versions will most
 ## Quickstart
 1. Include the script into your webpage:
 ```html
-<script src="gallery_es5script.js"></script>
+<script src="sbg_es2015.min.js"></script>
 ```
 2. Add the class 'sbg-image' to your images:
 ```html
@@ -39,7 +39,12 @@ Tested with the following browser versions (other browsers or versions will most
 ```
 3. Thats it! 
 
-## Further Options
+## Usage
+### Available Files
+* `js/`
+    * `sbg.js` - development version
+    * `sbg_es2015.min.js` - production version (minified, [transpiled](https://babeljs.io) to es2015)
+
 ### Thumbnails
 Use the `src` attribute of the image tag to display your thumbnails. The high resolution image can be specified with the `data-sbg-src` attribute:
 ```html
