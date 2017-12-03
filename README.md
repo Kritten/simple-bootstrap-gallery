@@ -2,7 +2,7 @@
 
 [DEMO](https://kritten.org/demo/simple-bootstrap-gallery)
 
-The main idea behind this library is to create an easy to integrate and easy to use gallery. 
+The main idea behind this library is to create an easy to integrate and easy to use gallery.<br/> 
 Most of the configuration of the library can be done without any javascript via html data attributes 
 
 ## Features
@@ -47,8 +47,8 @@ Use the `src` attribute of the image tag to display your thumbnails. The high re
 ```
 
 ### Multiple Galleries
-You can use the `data-sbg-gallery` attribute to separate the images into different galleries.
-Every image with the same `data-sbg-gallery` value is assigned to the same virtual gallery. a
+You can use the `data-sbg-gallery` attribute to separate the images into different galleries.<br/>
+Every image with the same `data-sbg-gallery` value is assigned to the same virtual gallery.<br/>
 If the `data-sbg-gallery` attribute is not specified the image is assigned to the `sbg-default` gallery.
 
 The following example creates three different galleries ('a', 'b' and 'sbg-default'):
