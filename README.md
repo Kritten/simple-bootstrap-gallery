@@ -8,10 +8,10 @@ Most of the configuration of the library can be done without any javascript via 
 ## Features
 * dynamic device specific navigation:
     
-    Device | previous image | next image | close lightbox
+    Device | open lightbox | previous image | next image | close lightbox
     ---|---|---|---
-    desktop | left arrow key, <br/> page up, <br/> click on left arrow | right arrow key, <br/> page down, <br/> click on right arrow | escape key, <br/> click outside of lightbox, <br/> click on closing symbol
-    mobile | swipe to right | swipe to right | touch anywhere
+    desktop | click on image | left arrow key, <br/> page up, <br/> click on left arrow | right arrow key, <br/> page down, <br/> click on right arrow | escape key, <br/> click outside of lightbox, <br/> click on closing symbol
+    mobile | touch on image| swipe to right | swipe to right | touch anywhere
 * multiple different, seperated galleries on the same page
 * support for optional thumbnails
 * every necessary html, css and javascript code is contained within the script
@@ -29,6 +29,7 @@ Most of the configuration of the library can be done without any javascript via 
 ```html
 <img src="image.jpg" class="sbg-image">
 ```
+3. Thats it! All available options are described in the 'Usage' section.
 
 ## Browser Support
 Tested with the following browser versions (other browsers or versions will most probably also work):
@@ -36,6 +37,8 @@ Tested with the following browser versions (other browsers or versions will most
 * Firefox 57+
 * Opera 49+
 * Microsoft Edge 41+
-* Internet Explorer 9 + 11
+* Internet Explorer 9, 11
 
 ## Usage
+### Thumbnails
+### Multiple Galleries
