@@ -9,7 +9,7 @@ Most of the configuration of the library can be done without any javascript via 
 * dynamic device specific navigation:
     
     Device | open lightbox | previous image | next image | close lightbox
-    ---|---|---|---
+    ---|---|---|---|---
     desktop | click on image | left arrow key, <br/> page up, <br/> click on left arrow | right arrow key, <br/> page down, <br/> click on right arrow | escape key, <br/> click outside of lightbox, <br/> click on closing symbol
     mobile | touch on image| swipe to right | swipe to right | touch anywhere
 * multiple different, seperated galleries on the same page
