@@ -20,6 +20,14 @@ Most of the configuration of the library can be done without any javascript via 
 * [Bootstrap 4](https://getbootstrap.com/)
 * [jQuery](https://jquery.com/) (any more or less recent version is sufficient, but **do not use the slim version**)
 
+## Browser Support
+Tested with the following browser versions (other browsers or versions will most probably also work):
+* Chrome 62+
+* Firefox 57+
+* Opera 49+
+* Microsoft Edge 41+
+* Internet Explorer 9, 11
+
 ## Quickstart
 1. Include the script into your webpage:
 ```html
@@ -29,16 +37,8 @@ Most of the configuration of the library can be done without any javascript via 
 ```html
 <img src="image.jpg" class="sbg-image">
 ```
-3. Thats it! All available options are described in the 'Usage' section.
+3. Thats it! 
 
-## Browser Support
-Tested with the following browser versions (other browsers or versions will most probably also work):
-* Chrome 62+
-* Firefox 57+
-* Opera 49+
-* Microsoft Edge 41+
-* Internet Explorer 9, 11
-
-## Usage
+## Further Options
 ### Thumbnails
 ### Multiple Galleries
