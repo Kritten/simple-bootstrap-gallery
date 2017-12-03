@@ -41,4 +41,21 @@ Tested with the following browser versions (other browsers or versions will most
 
 ## Further Options
 ### Thumbnails
+Use the `src` attribute of the image tag to display your thumbnails. The high resolution image can be specified with the `data-sbg-src` attribute:
+```html
+<img src="thumbnail.jpg" data-sbg-src="image.jpg" class="sbg-image">
+```
+
 ### Multiple Galleries
+You can use the `data-sbg-gallery` attribute to separate the images into different galleries.
+Every image with the same `data-sbg-gallery` value is assigned to the same virtual gallery. a
+If the `data-sbg-gallery` attribute is not specified the image is assigned to the `sbg-default` gallery.
+
+The following example creates three different galleries ('a', 'b' and 'sbg-default'):
+```html
+<img src="thumbnail1.jpg" data-sbg-src="image1.jpg" data-sbg-gallery="a" class="sbg-image">
+<img src="thumbnail2.jpg" data-sbg-src="image2.jpg" data-sbg-gallery="a" class="sbg-image">
+<img src="thumbnail3.jpg" data-sbg-src="image3.jpg" data-sbg-gallery="b" class="sbg-image">
+<img src="thumbnail4.jpg" data-sbg-src="image4.jpg" data-sbg-gallery="b" class="sbg-image">
+<img src="thumbnail5.jpg" data-sbg-src="image5.jpg" class="sbg-image">
+```
