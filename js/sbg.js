@@ -48,12 +48,20 @@ class Listener_Touch
     }
 }
 
-class Gallery 
+class Gallery
 {
-    constructor(html_modal, css_gallery) {
+    constructor() 
+    {
+
+    }    
+}
+
+class Gallery_Manager
+{
+    constructor(html_modal, css_gallery, settings) 
+    {
         this.m_name_class_image = '.sbg-image';
 
-        // this.m_duration_transition_images = 0; 
         this.m_duration_transition_images = 200; 
         this.m_duration_transition_controls = 100; 
         this.m_is_transitioning = false; 
@@ -396,4 +404,11 @@ const html_modal = `
 </div>
 `;
 
-const gallery = new Gallery(html_modal, css_gallery);
+try {
+    const gallery = new Gallery_Manager(html_modal, css_gallery, sbg_settings);
+} catch(ex) {
+    let sbg_settings = {
+        sbg_galley: {}
+    };
+    const gallery = new Gallery_Manager(html_modal, css_gallery, sbg_settings);
+}
