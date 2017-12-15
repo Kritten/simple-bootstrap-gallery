@@ -50,19 +50,44 @@ class Listener_Touch
 
 class Gallery
 {
-    constructor() 
+    constructor(settings = undefined) 
     {
+        this.m_settings = settings;
 
+        this.m_duration_transition_images = 200; 
+        this.set_settings();
+
+        this.m_index_current = 0,
+        this.m_map_images = new Map(),
+        this.m_list_images = []
     }    
+
+    set_settings()
+    {
+        if(this.m_settings != undefined)
+        {
+            const duration_transition_images = this.m_settings['transition_speed'];
+            if(duration_transition_images != undefined) 
+            {
+                this.m_duration_transition_images = duration_transition_images; 
+            }
+        }
+    }
+
+    add_image(src)
+    {
+        this.m_map_images.set(src, this.m_list_images.length);
+        this.m_list_images.push(src);
+    }
 }
 
 class Gallery_Manager
 {
-    constructor(html_modal, css_gallery, settings) 
+    constructor(html_modal, css_gallery, settings = undefined) 
     {
         this.m_name_class_image = '.sbg-image';
+        this.m_name_gallery_default = 'sbg-default';
 
-        this.m_duration_transition_images = 200; 
         this.m_duration_transition_controls = 100; 
         this.m_is_transitioning = false; 
 
@@ -71,18 +96,21 @@ class Gallery_Manager
 
         this.m_html_modal = html_modal;
         this.m_css_gallery = css_gallery;
+        this.m_settings = settings;
         this.m_image = new Image();
 
         this.m_map_galleries = new Map();
-        this.m_map_galleries.set('sbg-default', this.create_new_gallery());
 
         this.init();
+        console.log(this.m_map_galleries);
     }
 
     init()
     {
         $('body').append(this.m_html_modal);
         $('head').append(this.m_css_gallery);
+
+        this.m_map_galleries.set(this.m_name_gallery_default, new Gallery(this.find_setting_for_gallery(this.m_name_gallery_default)));
 
         const that = this;
 
@@ -95,8 +123,7 @@ class Gallery_Manager
             }
 
             const gallery = that.select_gallery(jquery_image);
-            gallery.map_images.set(src, gallery.list_images.length);
-            gallery.list_images.push(src);
+            gallery.add_image(src);
         });
 
         this.m_image_a = $('#wrapper_gallery img.a');
@@ -170,7 +197,7 @@ class Gallery_Manager
         const gallery = this.select_gallery(jquery_image);
 
         this.m_gallery_active = gallery;
-        gallery.index_current = gallery.map_images.get(src);
+        gallery.m_index_current = gallery.m_map_images.get(src);
 
         this.m_image_a.prop('src', '');
         this.m_image_b.prop('src', '');
@@ -191,15 +218,15 @@ class Gallery_Manager
 
             if(direction == 'left')
             {
-                this.m_gallery_active.index_current -= 1;
-                if(this.m_gallery_active.index_current <= -1) this.m_gallery_active.index_current = this.m_gallery_active.list_images.length - 1;
+                this.m_gallery_active.m_index_current -= 1;
+                if(this.m_gallery_active.m_index_current <= -1) this.m_gallery_active.m_index_current = this.m_gallery_active.m_list_images.length - 1;
             } else {
-                this.m_gallery_active.index_current += 1;
-                if(this.m_gallery_active.index_current >= this.m_gallery_active.list_images.length) this.m_gallery_active.index_current = 0;
+                this.m_gallery_active.m_index_current += 1;
+                if(this.m_gallery_active.m_index_current >= this.m_gallery_active.m_list_images.length) this.m_gallery_active.m_index_current = 0;
             }
 
             $('#gallery_modal_image .loader').show();
-            this.m_image.src = this.m_gallery_active.list_images[this.m_gallery_active.index_current];
+            this.m_image.src = this.m_gallery_active.m_list_images[this.m_gallery_active.m_index_current];
         }
     }
 
@@ -216,11 +243,11 @@ class Gallery_Manager
 
         image_active.prop('src', image.src);
 
-        image_inactive.css('opacity', 1).fadeTo(this.m_duration_transition_images, 0, function() {});
+        image_inactive.css('opacity', 1).fadeTo(this.m_gallery_active.m_duration_transition_images, 0, function() {});
         
         const that = this;
 
-        image_active.css('opacity', 0).fadeTo(this.m_duration_transition_images, 1, function() {
+        image_active.css('opacity', 0).fadeTo(this.m_gallery_active.m_duration_transition_images, 1, function() {
             that.m_is_transitioning = false;
             that.m_a_active = !that.m_a_active;
         });
@@ -228,13 +255,13 @@ class Gallery_Manager
         $('#gallery_modal_image .loader').hide();
     }
 
-    create_new_gallery()
+    find_setting_for_gallery(name_gallery)
     {
-        return {
-            index_current: 0,
-            map_images: new Map(),
-            list_images: []
-        };
+        if(this.m_settings != undefined && this.m_settings[name_gallery] != undefined)
+        {
+            return this.m_settings[name_gallery];
+        }
+        return undefined;
     }
 
     select_gallery(jquery_image)
@@ -245,9 +272,9 @@ class Gallery_Manager
         {
             if(name_gallery == undefined)
             {
-                gallery = this.m_map_galleries.get('sbg-default');
+                gallery = this.m_map_galleries.get(this.m_name_gallery_default);
             } else {
-                gallery = this.create_new_gallery();
+                gallery = new Gallery(this.find_setting_for_gallery(name_gallery));
                 this.m_map_galleries.set(name_gallery, gallery);
             }
         }
@@ -407,8 +434,5 @@ const html_modal = `
 try {
     const gallery = new Gallery_Manager(html_modal, css_gallery, sbg_settings);
 } catch(ex) {
-    let sbg_settings = {
-        sbg_galley: {}
-    };
-    const gallery = new Gallery_Manager(html_modal, css_gallery, sbg_settings);
+    const gallery = new Gallery_Manager(html_modal, css_gallery);
 }
