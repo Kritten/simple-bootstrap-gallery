@@ -50,29 +50,16 @@ class Listener_Touch
 
 class Gallery
 {
-    constructor(settings = undefined) 
+    constructor(settings) 
     {
         this.m_settings = settings;
 
-        this.m_duration_transition_images = 200; 
-        this.set_settings();
+        this.m_duration_transition_images = settings['transition_speed']; 
 
         this.m_index_current = 0,
         this.m_map_images = new Map(),
         this.m_list_images = []
     }    
-
-    set_settings()
-    {
-        if(this.m_settings != undefined)
-        {
-            const duration_transition_images = this.m_settings['transition_speed'];
-            if(duration_transition_images != undefined) 
-            {
-                this.m_duration_transition_images = duration_transition_images; 
-            }
-        }
-    }
 
     add_image(src)
     {
@@ -86,7 +73,8 @@ class Gallery_Manager
     constructor(html_modal, css_gallery, settings = undefined) 
     {
         this.m_name_class_image = '.sbg-image';
-        this.m_name_gallery_default = 'sbg-default';
+        this.m_name_gallery_default = 'sbg-class-default';
+        this.m_name_settings_default = 'sbg-default';
 
         this.m_duration_transition_controls = 100; 
         this.m_is_transitioning = false; 
@@ -96,7 +84,7 @@ class Gallery_Manager
 
         this.m_html_modal = html_modal;
         this.m_css_gallery = css_gallery;
-        this.m_settings = settings;
+        this.m_settings = this.parse_settings(settings);
         this.m_image = new Image();
 
         this.m_map_galleries = new Map();
@@ -255,13 +243,42 @@ class Gallery_Manager
         $('#gallery_modal_image .loader').hide();
     }
 
+    get_settings_default()
+    {
+        return  {
+            'transition_speed': 200,    
+        };
+    }
+
+    parse_settings(settings)
+    {
+        const that = this;
+        const obj_settings = {};
+
+        obj_settings[this.m_name_settings_default] = this.get_settings_default();
+
+        if(settings != undefined)
+        {
+            $.each(settings, function(name_gallery, settings_gallery) {
+                obj_settings[name_gallery] = that.get_settings_default();
+                $.each(settings_gallery, function(property, value) {
+                    obj_settings[name_gallery][property] = value;
+                });
+            });
+        }
+
+        console.log(obj_settings)
+        return obj_settings;
+    }
+
     find_setting_for_gallery(name_gallery)
     {
-        if(this.m_settings != undefined && this.m_settings[name_gallery] != undefined)
+        if(this.m_settings[name_gallery] != undefined)
         {
             return this.m_settings[name_gallery];
         }
-        return undefined;
+
+        return this.m_settings[this.m_name_settings_default];
     }
 
     select_gallery(jquery_image)
