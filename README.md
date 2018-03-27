@@ -1,6 +1,6 @@
 # simple-bootstrap-gallery
 
-[DEMO](https://kritten.org/demo/simple-bootstrap-gallery)
+[DEMO](https://sbg.kritten.org/)
 
 The main idea behind this library is to create an easy to integrate and easy to use gallery.<br> 
 Most of the configuration of the library can be done without any javascript via html data attributes 
